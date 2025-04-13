@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fast Food Order</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://i.imgur.com/uO3FQFJ.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .item-row, .info-row {
+      margin: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    label {
+      flex: 1;
+      text-align: left;
+    }
+    input[type="number"], input[type="text"] {
+      width: 60%;
+      padding: 5px;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #ff9800;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .delivery-note {
+      font-size: 14px;
+      background-color: #444;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .contact, .insta {
+      margin-top: 20px;
+      font-size: 16px;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .insta a {
+      color: #00acee;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍔 Fast Food Order</h1>
+
+    <form action="https://formsubmit.co/krishanprajapati5306@gmail.com" method="POST" onsubmit="return prepareFormData()">
+      
+      <div class="item-row"><label>Bagger - ₹25</label><input type="number" id="bagger" name="Bagger Qty" value="0" min="0"></div>
+      <div class="item-row"><label>Chumain - ₹25</label><input type="number" id="chumain" name="Chumain Qty" value="0" min="0"></div>
+      <div class="item-row"><label>Patizz - ₹25</label><input type="number" id="patizz" name="Patizz Qty" value="0" min="0"></div>
+      <div class="item-row"><label>Momos (1 Plate) - ₹60</label><input type="number" id="momos" name="Momos Qty" value="0" min="0"></div>
+
+      <div class="info-row"><label>Your Phone Number:</label><input type="text" name="Customer Phone" required></div>
+      <div class="info-row"><label>Delivery Address:</label><input type="text" name="Delivery Address" required></div>
+      <div class="info-row"><label>Your Location (meters):</label><input type="number" id="distance" name="Distance in Meters" required></div>
+
+      <div class="delivery-note">
+        🛵 Delivery free under 600 meters. ₹100 for 1 km.
+      </div>
+
+      <input type="hidden" name="Total Amount" id="totalAmountField">
+      <input type="hidden" name="_next" value="https://wa.me/918683868939?text=Hi!%20My%20order%20has%20been%20submitted.">
+      <input type="hidden" name="_captcha" value="false">
+
+      <button type="submit">Submit Order</button>
+    </form>
+
+    <div class="contact">
+      <p>📞 Contact: 8683868939</p>
+      <p>📧 Email: krishanprajapati5306@gmail.com</p>
+    </div>
+
+    <div class="insta">
+      <p>📷 Follow me on Instagram: 
+        <a href="https://instagram.com/the_daksh_rifile" target="_blank">@the_daksh_rifile</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function prepareFormData() {
+      const prices = {
+        bagger: 25,
+        chumain: 25,
+        patizz: 25,
+        momos: 60
+      };
+
+      const qty = {
+        bagger: parseInt(document.getElementById("bagger").value) || 0,
+        chumain: parseInt(document.getElementById("chumain").value) || 0,
+        patizz: parseInt(document.getElementById("patizz").value) || 0,
+        momos: parseInt(document.getElementById("momos").value) || 0
+      };
+
+      const distance = parseInt(document.getElementById("distance").value) || 0;
+
+      let total = (qty.bagger * prices.bagger) +
+                  (qty.chumain * prices.chumain) +
+                  (qty.patizz * prices.patizz) +
+                  (qty.momos * prices.momos);
+
+      let deliveryCharge = 0;
+      if (distance > 600 && distance <= 1000) {
+        deliveryCharge = 100;
+      } else if (distance > 1000) {
+        alert("⚠️ Delivery is only available within 1 km.");
+        return false;
+      }
+
+      total += deliveryCharge;
+
+      if (total === 0) {
+        alert("⚠️ Please select at least one item before submitting.");
+        return false;
+      }
+
+      document.getElementById("totalAmountField").value = `₹${total} (Includes ₹${deliveryCharge} Delivery)`;
+      return true;
+    }
+  </script>
+</body>
+</html>
+https://github.com/thakurla/fastfood-order-form.git
